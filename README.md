@@ -4,7 +4,7 @@
 
 ![Method Diagram](docs/method.png)
 
-## MIHIC-HybridNet: A Hybrid Vision Transformer with Multiscale Channel–Spatial Attention for Lung Cancer Detection
+
 We augment a DeiT backbone with a lightweight **M**ulti-scale **C**hannel- and **S**patial **A**ttention branch operating on the pre-transformer patch map. The transformer features **F<sub>DeiT</sub>** are fused with local features **F<sub>MCSA</sub>** using (i) a **spatial fusion gate** (per-location mixing) and (ii) a **per-channel gate**. The boosted training recipe adds **EMA**, **knowledge distillation**, and **TTA** at validation/testing. 
 
 ## Repo layout 
