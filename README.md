@@ -4,8 +4,8 @@
 
 ![Method Diagram](docs/method.png)
 
-## TL;DR
-We augment a DeiT backbone with a lightweight **M**ulti-scale **C**hannel- and **S**patial **A**ttention branch operating on the pre-transformer patch map. The transformer features **F<sub>DeiT</sub>** are fused with local features **F<sub>MCSA</sub>** using (i) a **spatial fusion gate** (per-location mixing) and (ii) a **per-channel gate**. The boosted training recipe adds **EMA**, **knowledge distillation**, and **TTA** at validation/testing. The pipeline saves confusion matrices, per-class metrics, and per-class ROC curves (CSV + PNG).
+## MIHIC-HybridNet: A Hybrid Vision Transformer with Multiscale Channel–Spatial Attention for Lung Cancer Detection
+We augment a DeiT backbone with a lightweight **M**ulti-scale **C**hannel- and **S**patial **A**ttention branch operating on the pre-transformer patch map. The transformer features **F<sub>DeiT</sub>** are fused with local features **F<sub>MCSA</sub>** using (i) a **spatial fusion gate** (per-location mixing) and (ii) a **per-channel gate**. The boosted training recipe adds **EMA**, **knowledge distillation**, and **TTA** at validation/testing. 
 
 ## Repo layout 
 
@@ -130,7 +130,7 @@ with Multiscale Channel–Spatial Attention for
 Lung Cancer Detection},
   author={HUSSEIN M. A. MOHAMMED, ASLI NUR POLAT, and MUSTAFA EREN YILDIRIM},
   year={2025},
-  url={[[https://github.com/yourname/deit-csa](https://github.com/AsHuTeam/MIHIC-HybridNet)]}
+  url={[(https://github.com/AsHuTeam/MIHIC-HybridNet)]}
 }
 ```
 
@@ -142,8 +142,3 @@ MIT (see `LICENSE`).
 
 ---
 
-### Notes
-
-- We refer to the transformer features as **F<sub>DeiT</sub>** and the local branch features as **F<sub>MCSA</sub>** throughout the code and README for clarity.  
-- No logic changes are required to match the paper figure; names are notational only.  
-- If `matplotlib` is unavailable, ROC PNG is skipped but CSVs are still written.
