@@ -31,8 +31,8 @@ docs/
 ## Installation
 
 ```bash
-conda create -n mihic1 python=3.10 -y
-conda activate mihic1
+conda create -n env python=3.10 -y
+conda activate env
 pip install torch torchvision timm
 # (optional) for plotting ROC curves:
 pip install matplotlib
@@ -42,7 +42,6 @@ pip install matplotlib
 
 ## Dataset
 
-Expected folder layout (ImageFolder):
 
 ```
 <DATASET_PATH>/
