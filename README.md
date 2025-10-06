@@ -1,6 +1,6 @@
-# Context-Aware DeiT + MCSA (Boosted)
 
-> **F<sub>DeiT</sub> ⨁ F<sub>MCSA</sub> with spatial & channel fusion, GeM pooling, EMA+KD training, and full ROC reporting**
+
+## MIHIC-HybridNet: A Hybrid Vision Transformer with Multiscale Channel–Spatial Attention for Lung Cancer Detection
 
 ![Method Diagram](docs/method.png)
 
