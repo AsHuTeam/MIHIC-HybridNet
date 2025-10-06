@@ -7,31 +7,7 @@
 ## TL;DR
 We augment a DeiT backbone with a lightweight **M**ulti-scale **C**hannel- and **S**patial **A**ttention branch operating on the pre-transformer patch map. The transformer features **F<sub>DeiT</sub>** are fused with local features **F<sub>MCSA</sub>** using (i) a **spatial fusion gate** (per-location mixing) and (ii) a **per-channel gate**. The boosted training recipe adds **EMA**, **knowledge distillation**, and **TTA** at validation/testing. The pipeline saves confusion matrices, per-class metrics, and per-class ROC curves (CSV + PNG).
 
----
-
-## Highlights
-
-- **Parallel hybrid**: shared patch embedding →  
-  ▸ Transformer path → **F<sub>DeiT</sub>**  
-  ▸ Local path (multi-scale DW convs + ChannelAttention + safer SpatialAttention) → **F<sub>MCSA</sub>**
-- **Fusion**:  
-  ▸ **SpatialFusionGate** mixes **F<sub>DeiT</sub>** and **F<sub>MCSA</sub>** per location → *F<sub>mix</sub>*  
-  ▸ **Channel gate** (sigmoid(α⃗)) blends channels of *F<sub>mix</sub>* and **F<sub>DeiT</sub>**  
-  ▸ **GeM pooling** + **[CLS]** → classifier
-- **Boosted recipe** (used for the full CSA variant):
-  - Larger input (default **224**) for a denser feature grid  
-  - **EMA** of weights (decay 0.999)  
-  - **KD** (T=2.0; loss = 0.6·CE + 0.4·KD)  
-  - **TTA** (h-flip) at val/test  
-  - 2× LR on local/fusion/head params; warmup → cosine
-- **Metrics & artifacts** (per variant):
-  - `confusion_matrix.csv`, `per_class_metrics.csv`
-  - `roc/roc_auc.csv`, `roc/roc_class_<name>.csv`, `roc/roc_curves.png`
-  - Best checkpoint by val-acc in `results_ablation/checkpoints/`
-
----
-
-## Repo layout (suggested)
+## Repo layout 
 
 ```
 src/
@@ -49,7 +25,6 @@ docs/
   method.png             # the figure shown above
 ```
 
-> If you already split your code differently, keep the same names but adjust imports.
 
 ---
 
@@ -79,7 +54,7 @@ Expected folder layout (ImageFolder):
 Set the path in your config (or env var):
 
 ```python
-DATASET_PATH = r"E:\Ashu2025\Mihic_Dataset\MIHIC_dataset\dataset"
+DATASET_PATH = r"Path To Dataset"
 ```
 
 ---
@@ -101,11 +76,10 @@ What this does:
 
 ```python
 from src.deit_csa.models import (
-    make_deit_plus_multiscale_channel_spatial,        # base CSA
     make_deit_plus_multiscale_channel_spatial_boosted # boosted CSA
 )
 
-m_base = make_deit_plus_multiscale_channel_spatial(num_classes=7, img_size=128)
+
 m_boost = make_deit_plus_multiscale_channel_spatial_boosted(num_classes=7, img_size=224)
 ```
 
@@ -121,7 +95,7 @@ m_boost = make_deit_plus_multiscale_channel_spatial_boosted(num_classes=7, img_s
 
 - **Fusion**
   - **SpatialFusionGate**: Conv(2C→h) → BN → ReLU → Conv(h→1) → Sigmoid
-  - **Channel gate** α⃗ (sigmoid) blending **F<sub>DeiT</sub>** with *F<sub>mix</sub>*
+  - **Channel gate** α (sigmoid) blending **F<sub>DeiT</sub>** with *F<sub>mix</sub>*
   - **GeM** pooling (p learnable; stable on small grids)
 
 - **Boosted Training**
@@ -131,25 +105,7 @@ m_boost = make_deit_plus_multiscale_channel_spatial_boosted(num_classes=7, img_s
 
 ---
 
-## Outputs
 
-After a run you’ll have:
-
-```
-results_ablation/
-  checkpoints/DeiT_plus_multiscale_channel_spatial.pth
-  DeiT_plus_multiscale_channel_spatial/
-    confusion_matrix.csv
-    per_class_metrics.csv
-    roc/
-      roc_auc.csv
-      roc_class_<Class>.csv
-      roc_curves.png
-    params.txt
-  summary.csv   # one row per model variant
-```
-
----
 
 ## Repro tips
 
@@ -163,14 +119,18 @@ results_ablation/
 
 ## Citation
 
-If you use this repo, please cite:
+If you use this repo, please cite: MIHIC-HybridNet: A Hybrid Vision Transformer
+with Multiscale Channel–Spatial Attention for
+Lung Cancer Detection
 
 ```bibtex
 @misc{deit_mcsa_boosted,
-  title={Context-Aware DeiT with Multi-Scale Channel+Spatial Attention and Boosted Training},
-  author={Your Name},
+  title={MIHIC-HybridNet: A Hybrid Vision Transformer
+with Multiscale Channel–Spatial Attention for
+Lung Cancer Detection},
+  author={HUSSEIN M. A. MOHAMMED, ASLI NUR POLAT, and MUSTAFA EREN YILDIRIM},
   year={2025},
-  url={https://github.com/yourname/deit-csa}
+  url={[[https://github.com/yourname/deit-csa](https://github.com/AsHuTeam/MIHIC-HybridNet)]}
 }
 ```
 
